@@ -75,14 +75,40 @@ const RecordDepositScreen = () => {
         <View style={styles.containerButton}>
         <View style={styles.containerInput}>
         
-        {/* <Pressable onPress={()=>handleModalBank() } style={{width:"100%"}}>
-        <CustomInput style={styles.input} icon={<MaterialIcons name="account-balance-wallet" size={24} color="#8c8c8c" />} label='Cuenta receptora' />
-        </Pressable> */}
 
-        {/* <Picker style={{width:"90%",borderRadius:50,borderColor:"red",borderWidth:3}} mode='dialog'>
-          <Picker.Item label="Cuenta receptora" value="" />
-          <Picker.Item label="Opción 1" value="option1" />
-        </Picker> */}
+          <View style={{width:"100%",position:"relative"}}>
+        <CustomInput style={styles.input} icon={<MaterialIcons name="account-balance-wallet" size={24} color="#8c8c8c" />} label='Cuenta receptora' />
+         <Pressable onPress={()=>handleModalBank() } style={{width:"100%",height:"100%",position:"absolute"}}>
+        </Pressable> 
+          </View>
+
+          {/* modal de BankList */}
+
+         <Modal visible={isOpenModalBank} transparent={true} animationType='slide'>
+          <Pressable onPress={()=>handleModalBank()} style={{alignItems:"center",flex:1,paddingTop:140,backgroundColor: "rgba(0, 0, 0, 0.3)"}}>
+            
+            <View style={{width:"83%",backgroundColor:"#fff"}}>
+
+            <View style={{padding:15, flexDirection:"row",backgroundColor:"#97999D",borderBottomColor:"#01135B",borderBottomWidth:3}}>
+            <MaterialIcons style={{width:"10%",height:"100%",marginRight:5}} name="account-balance-wallet" size={30} color="#616161" />
+            <Text style={{width:"90%",fontSize:11,color:"#01135B"}} >Cuenta receptora</Text>
+            </View>
+            <View style={{width:"100%"}}>
+
+            {bankAccounts.map(({bank})=>(
+              <Pressable style={{width:"100%",padding:10}}> 
+              <Text>
+                {bank}
+                </Text>
+              </Pressable>
+             )
+             )}
+             </View>
+
+          </View>
+            </Pressable>
+        </Modal>  
+        
         <CustomInput style={styles.input}  label='Monto' icon={<Text style={styles.iconBs} >Bs</Text>}/>
         <CustomInput style={styles.input} label='Referencia' icon={<MaterialIcons name="receipt-long" size={24} color="#8c8c8c" />}/>
         <CustomInput style={styles.input} label='Fecha' icon={<MaterialIcons name="insert-invitation" size={24} color="#8c8c8c" />}/>
@@ -104,11 +130,7 @@ const RecordDepositScreen = () => {
           <ModalAddPhoto handleModalPhoto={handleModalPhoto} />
         </Modal>
 
-        {/* modal de BankList */}
-
-         {/* <Modal visible={isOpenModalBank} animationType='slide'>
-
-        </Modal>  */}
+        
     </SafeAreaView>
   )
 }

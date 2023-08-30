@@ -13,15 +13,40 @@ import * as Animatable from "react-native-animatable";
 import { Entypo} from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { Fonts } from "../utils/fontsObject";
+import ItemExtraubano from "../components/ItemExtraubano";
 
-const ServiceHistoryScreen = () => {
+const ServiceExtraurbanoScreen = () => {
+
+    const lugaresVenezuela = [
+        {
+          lugar: "Caracas",
+          distancia: 668,
+          precio: 150,
+        },
+        {
+          lugar: "Valencia",
+          distancia: 334,
+          precio: 80,
+        },
+        {
+          lugar: "Barquisimeto",
+          distancia: 384,
+          precio: 90,
+        },
+        {
+          lugar: "Maracay",
+          distancia: 586,
+          precio: 120,
+        },
+        {
+          lugar: "Mérida",
+          distancia: 364,
+          precio: 100,
+        },
+      ];
+
+
   const { handleDrawer, openDrawer } = useDrawer();
-
-  const [active, setAtieve] = useState("TODO");
-
-  const handlePress = (optionSelected) => {
-    setAtieve(optionSelected);
-  };
 
   const slideAnimation = {
     from: {
@@ -55,7 +80,7 @@ const ServiceHistoryScreen = () => {
           </View>
 
           <View style={styles.containerTitle}>
-            <Text style={styles.title}>HISTORIAL DE SERVICIOS</Text>
+            <Text style={styles.title}>SERVICIOS EXTRAURBANOS</Text>
           </View>
         </View>
       </View>
@@ -69,51 +94,10 @@ const ServiceHistoryScreen = () => {
       </Animatable.View>
 
       <View style={styles.displayDown}>
-        <ScrollView horizontal={true} style={styles.OptionsScroll}>
-          <Pressable onPress={() => handlePress("TODO")}>
-            <Text
-              style={active === "TODO" ? styles.OptionActive : styles.option}
-            >
-              TODO
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => handlePress("EN CURSO")}>
-            <Text
-              style={
-                active === "EN CURSO" ? styles.OptionActive : styles.option
-              }
-            >
-              EN CURSO
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => handlePress("PENDIENTE")}>
-            <Text
-              style={
-                active === "PENDIENTE" ? styles.OptionActive : styles.option
-              }
-            >
-              PENDIENTE
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => handlePress("POR PAGAR")}>
-            <Text
-              style={
-                active === "POR PAGAR" ? styles.OptionActive : styles.option
-              }
-            >
-              POR PAGAR
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => handlePress("PAGADO")}>
-            <Text
-              style={active === "PAGADO" ? styles.OptionActive : styles.option}
-            >
-              PAGADO
-            </Text>
-          </Pressable>
-        </ScrollView>
+        
+        {lugaresVenezuela.map((item)=> <ItemExtraubano item={item} />
+        )}
 
-        <Text style={styles.message}>Aún no ha realizado ninguna recarga.</Text>
       </View>
     </SafeAreaView>
   );
@@ -184,26 +168,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 15,
   },
-
-  OptionsScroll: { width: "75%", maxHeight: "6%" },
-
-  option: { padding: 7, color: "#8C8C8C", fontFamily: "roboto-condensed",marginHorizontal:9 },
-
-  OptionActive: {
-    color: "#01135B",
-    padding: 7,
-    borderBottomColor: "#01135B",
-    borderBottomWidth: 3,
-    fontFamily: "roboto-condensed",
-    marginHorizontal:9
-  },
-
-  message: {
-    color: "#8C8C8C",
-    marginTop: 30,
-    fontFamily: "roboto-regular",
-    fontSize: 12,
-  },
 });
 
-export default ServiceHistoryScreen;
+export default ServiceExtraurbanoScreen;

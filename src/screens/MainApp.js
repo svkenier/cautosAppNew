@@ -13,6 +13,7 @@ import ServiceHistoryScreen from './ServiceHistoryScreen';
 import SwapScreen from './SwapScreen';
 import BanksScreens from './BanksScreens';
 import RecordDepositScreen from './RecordDepositScreen';
+import ServiceExtraurbanoScreen from './ServiceExtraurbanosScreen';
 
 const Stack = createNativeStackNavigator()
 const MainApp = () => {
@@ -34,6 +35,7 @@ const MainApp = () => {
       <Stack.Screen options={{headerShown:false}} name="banksScreen" component={BanksScreens} />
       <Stack.Screen options={{headerShown:false}} name="recordDepositScreen" component={RecordDepositScreen} />
       <Stack.Screen options={{headerShown:false }} name="Historial de sevicios" component={ServiceHistoryScreen} />
+      <Stack.Screen options={{headerShown:false }} name="Servicios extraurbanos" component={ServiceExtraurbanoScreen} />
       </Stack.Navigator>
 
 
