@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useContext } from "react";
 import {
   SafeAreaView,
   Text,
@@ -14,6 +14,7 @@ import { Entypo} from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { Fonts } from "../utils/fontsObject";
 import ItemExtraubano from "../components/ItemExtraubano";
+import { StopsContext } from "../context/StopsContext";
 
 const ServiceExtraurbanoScreen = () => {
 
@@ -44,6 +45,14 @@ const ServiceExtraurbanoScreen = () => {
           precio: 100,
         },
       ];
+      const { setActiveOptionMenu} = useContext(StopsContext);
+
+    //   useEffect(() => {
+    //     if (setActiveOptionMenu != "Servicios extraurbanos") {
+    //       setActiveOptionMenu("Servicios extraurbanos")
+    //     }
+    
+    // }, )
 
 
   const { handleDrawer, openDrawer } = useDrawer();
@@ -62,6 +71,7 @@ const ServiceExtraurbanoScreen = () => {
   if (!fontLoaded) {
     return <View />;
   }
+
 
   return (
     <SafeAreaView style={styles.root}>
@@ -95,7 +105,7 @@ const ServiceExtraurbanoScreen = () => {
 
       <View style={styles.displayDown}>
         
-        {lugaresVenezuela.map((item)=> <ItemExtraubano item={item} />
+        {lugaresVenezuela.map((item,index)=> <ItemExtraubano key={index} item={item} />
         )}
 
       </View>

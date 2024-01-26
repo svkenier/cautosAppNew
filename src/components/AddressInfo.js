@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     width: "72%",
   },
   stepTitle: {
-    color: "gray",
+    color: "#fff",
     fontFamily:"roboto-boldCondensed",
     fontSize: 14,
     marginVertical: 10,

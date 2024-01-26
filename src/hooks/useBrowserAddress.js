@@ -9,7 +9,7 @@ const useBrowserAddress = () => {
 
   const {setStops,stops} = useContext(StopsContext)
   const [address, setAddress] = useState({})
-  
+
   const currentTime = new Date().getTime();
 
 
@@ -17,8 +17,7 @@ const useBrowserAddress = () => {
   const addStop = (destinationAddress) =>{
     setAddress(destinationAddress)
     setStops([...stops,{...destinationAddress ,title:"parada",id:currentTime}])
-     
-    
+   
   }
 
   return {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-import CustomInput from "./CustomInput";
+import CustomInput from "./CustomInput3";
 import {useFormikContext } from "formik";
 import { useFonts } from "expo-font";
 import { Fonts } from "../utils/fontsObject";

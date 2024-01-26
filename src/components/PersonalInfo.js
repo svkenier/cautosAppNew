@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import CustomInput from "../components/CustomInput";
+import CustomInput from "./CustomInput";
 import {  useFormikContext } from "formik";
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
 import { useFonts } from "expo-font";
@@ -30,6 +30,7 @@ const PersonalInfo = () => {
           helperText={errors.name && touched.name && <Text style={styles.error}>{errors.name}</Text> }
           onBlur={handleBlur("name")}
           icon={<FontAwesome5  name="user" size={24} color="#01135B" />}
+          
           
           />
           
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     width: "72%",
   },
   stepTitle: {
-    color: "gray",
+    color: "#fff",
     fontFamily:"roboto-boldCondensed",
     fontSize: 14,
     marginVertical: 10,

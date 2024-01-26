@@ -6,7 +6,7 @@ import CustomButton from '../components/CustomButton';
 import { useFonts } from "expo-font";
 import { Fonts } from "../utils/fontsObject";
 import { useNavigation } from "@react-navigation/native";
-import InputCustom from '../components/InputCustom';
+
 
 const SwapScreen = () => {
     const navigation = useNavigation();
@@ -32,17 +32,6 @@ const SwapScreen = () => {
         
         <CustomInput style={styles.input} icon={<MaterialIcons name="smartphone" size={24} color="#01135B" />} label='Nro. de telefono'/>
        
-        {/* <InputCustom 
-        style={styles.input}
-        label={'Course Name'}
-        iconClass={MaterialIcons}
-        iconName={'smartphone'}
-        iconColor={'#01135B'}
-        iconSize={22}
-        iconWidth={30}
-        inputPadding={12}
-        
-        /> */}
         <View style={styles.containerButtom}>
         <CustomButton style={styles.Buttom} textButton="CONTINUAR" typeButton="terseary" />
         </View>

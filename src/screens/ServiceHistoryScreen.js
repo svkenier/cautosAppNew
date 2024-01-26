@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   SafeAreaView,
   Text,
@@ -10,17 +10,32 @@ import {
 import useDrawer from "../hooks/useDrawer";
 import DrawerMenu from "../components/DrawerMenu";
 import * as Animatable from "react-native-animatable";
-import { Entypo} from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { Fonts } from "../utils/fontsObject";
+import { StopsContext } from "../context/StopsContext";
+import ItemDataDrivers from "../components/ItemDataDrivers";
+import useShowDetails from "../hooks/useShowDetails";
 
-const ServiceHistoryScreen = () => {
+const ServiceHistoryScreen = (props) => {
+  const { setActiveOptionMenu } = useContext(StopsContext);
   const { handleDrawer, openDrawer } = useDrawer();
-
-  const [active, setAtieve] = useState("TODO");
+  const { dataDrivers, showDetailsServices } = useShowDetails();
+  const [active, setAtieve] = useState("Todo");
+  const [driversList, setDriversList] = useState(dataDrivers);
 
   const handlePress = (optionSelected) => {
     setAtieve(optionSelected);
+    if (optionSelected !== "Todo") {
+      
+      const result = dataDrivers.filter((item) => item.status === optionSelected 
+         
+         )
+         setDriversList(result);
+         
+     } else {
+       setDriversList(dataDrivers);
+     }
   };
 
   const slideAnimation = {
@@ -38,9 +53,16 @@ const ServiceHistoryScreen = () => {
     return <View />;
   }
 
+  // useEffect(() => {
+  //  if (setActiveOptionMenu != "Historial de sevicios" ) {
+  //    setActiveOptionMenu("Historial de sevicios")
+
+  //  }
+
+  // }, )
+
   return (
     <SafeAreaView style={styles.root}>
-      
       <View style={styles.ContainerDisplayHigh}>
         <View style={styles.displayHigh}>
           <View style={styles.containerMenu}>
@@ -70,50 +92,62 @@ const ServiceHistoryScreen = () => {
 
       <View style={styles.displayDown}>
         <ScrollView horizontal={true} style={styles.OptionsScroll}>
-          <Pressable onPress={() => handlePress("TODO")}>
+          <Pressable onPress={() => handlePress("Todo")}>
             <Text
-              style={active === "TODO" ? styles.OptionActive : styles.option}
+              style={active === "Todo" ? styles.OptionActive : styles.option}
             >
               TODO
             </Text>
           </Pressable>
-          <Pressable onPress={() => handlePress("EN CURSO")}>
+          <Pressable onPress={() => handlePress("Rodando")}>
             <Text
               style={
-                active === "EN CURSO" ? styles.OptionActive : styles.option
+                active === "Rodando" ? styles.OptionActive : styles.option
               }
             >
               EN CURSO
             </Text>
           </Pressable>
-          <Pressable onPress={() => handlePress("PENDIENTE")}>
+          <Pressable onPress={() => handlePress("Pendiente")}>
             <Text
               style={
-                active === "PENDIENTE" ? styles.OptionActive : styles.option
+                active === "Pendiente" ? styles.OptionActive : styles.option
               }
             >
-              PENDIENTE
+              PENDIENTES
             </Text>
           </Pressable>
-          <Pressable onPress={() => handlePress("POR PAGAR")}>
+          <Pressable onPress={() => handlePress("Por pagar")}>
             <Text
               style={
-                active === "POR PAGAR" ? styles.OptionActive : styles.option
+                active === "Por pagar" ? styles.OptionActive : styles.option
               }
             >
               POR PAGAR
             </Text>
           </Pressable>
-          <Pressable onPress={() => handlePress("PAGADO")}>
+          <Pressable onPress={() => handlePress("Pagado")}>
             <Text
-              style={active === "PAGADO" ? styles.OptionActive : styles.option}
+              style={active === "Pagado" ? styles.OptionActive : styles.option}
             >
               PAGADO
             </Text>
           </Pressable>
         </ScrollView>
 
-        <Text style={styles.message}>Aún no ha realizado ninguna recarga.</Text>
+        {driversList.length > 0 ? (
+          driversList.map((item, index) => (
+            <ItemDataDrivers
+              showDetailsServices={showDetailsServices}
+              key={index}
+              item={item}
+            />
+          ))
+        ) : (
+          <Text style={styles.message}>
+            Aún no ha realizado ninguna recarga.
+          </Text>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -163,17 +197,17 @@ const styles = StyleSheet.create({
   },
 
   containerTitle: {
-    marginTop:15,
-    width:"100%",
-    justifyContent:"center",
-    alignItems:"center"
+    marginTop: 15,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  title: { 
-    color:"#fff",
-    fontFamily:"teko-bold",
-    fontSize:25
- },
+  title: {
+    color: "#fff",
+    fontFamily: "teko-bold",
+    fontSize: 25,
+  },
 
   displayDown: {
     backgroundColor: "#fff",
@@ -187,7 +221,12 @@ const styles = StyleSheet.create({
 
   OptionsScroll: { width: "75%", maxHeight: "6%" },
 
-  option: { padding: 7, color: "#8C8C8C", fontFamily: "roboto-condensed",marginHorizontal:9 },
+  option: {
+    padding: 7,
+    color: "#8C8C8C",
+    fontFamily: "roboto-condensed",
+    marginHorizontal: 9,
+  },
 
   OptionActive: {
     color: "#01135B",
@@ -195,7 +234,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#01135B",
     borderBottomWidth: 3,
     fontFamily: "roboto-condensed",
-    marginHorizontal:9
+    marginHorizontal: 9,
   },
 
   message: {

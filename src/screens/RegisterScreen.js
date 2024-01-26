@@ -13,6 +13,8 @@ import LogoCautos from "../components/LogoCautos";
 import {useNavigation} from "@react-navigation/native"
 import { useFonts } from "expo-font";
 import { Fonts } from "../utils/fontsObject";
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const RegisterScreen = () => {
   const navigation = useNavigation()
@@ -25,8 +27,13 @@ const RegisterScreen = () => {
 
 
   return (
-    <ScrollView style={styles.fondo}>
-      <SafeAreaView style={styles.root}>
+    <SafeAreaView style={styles.root}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={[ '#27C4B0','#16778B','#00135B']}
+        style={styles.background}
+        />
+        <ScrollView style={styles.fondo}>
         <View style={styles.title}>
           <View style={styles.icon}>
             <Pressable onPress={() => navigation.goBack()}>
@@ -42,17 +49,29 @@ const RegisterScreen = () => {
           <LogoCautos />
           <StepperForm style={styles.stepForm} />
         </View>
-      </SafeAreaView>
     </ScrollView>
+      </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",
-    padding: 10,
+    height:"100%",
+ 
    
     
+  },
+
+  fondo: {
+    width: "100%",
+    height: "100%",
+  },
+  background:{
+    width:'100%',
+    height:"100%",
+    position:"absolute",
+ 
   },
   containerButton: {
     width: "70%",
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   text: {
-    color: "gray",
+    color: "#fff",
     fontSize: 20,
     fontFamily:"roboto-condensed"
   },
@@ -70,12 +89,7 @@ const styles = StyleSheet.create({
     width: "72%",
   },
   
-  fondo: {
-    width: "100%",
-    height: "100%",
-    backgroundColor:
-    "linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)",
-  },
+ 
   stepForm: {
     height: "100%",
   },
@@ -90,14 +104,16 @@ const styles = StyleSheet.create({
   },
   icon: { 
     width: "12%",
-    marginTop:30
+    marginTop:30,
+    marginLeft:25
   },
 
   ContainerText: { 
-    width: "90%",
+    width: "80%",
     alignItems: "center",
     marginTop:30 
   },
+ 
 });
 
 export default RegisterScreen;

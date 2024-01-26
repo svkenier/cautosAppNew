@@ -16,14 +16,17 @@ import * as Animatable from 'react-native-animatable';
 const MapScreen = () => {
   const navigation = useNavigation();
   const {handleDrawer, openDrawer, closeDrawer} = useDrawer()
-  console.log("openDrawer",openDrawer)
-  const { stops} = useContext(StopsContext);
+  const { stops, setActiveOptionMenu} = useContext(StopsContext);
   const [stopsState, setStopsState] = useState(stops);
+  const [lastStop, setLastStops] = useState({});
+  
   const { address } = useBrowserAddress();
   const [origin, setOrigin] = useState({
     latitude: 10.65274,
     longitude: -71.63019,
   });
+  const [distance,setDistance] = useState("")
+
   
   const slideAnimation = {
     from: {
@@ -50,15 +53,47 @@ const MapScreen = () => {
       longitude,
     });
 
+    
     const newRegion = {
       latitude: origin.latitude,
       longitude: origin.longitude,
       latitudeDelta: 0.09,
       longitudeDelta: 0.04,
     };
-
+    
     mapViewRef.current.animateToRegion(newRegion);
+    
+  
   };
+  
+  console.log("penultima",lastStop)
+
+  const saveLastStops  = async (stops) =>{
+      
+    
+  console.log("Stop",stops)
+const penultima  = await stops.at(-1)
+
+ const {latitude, longitude} = penultima
+ console.log("aq",penultima)
+ setLastStops({latitude,longitude})
+}
+
+
+   useEffect(() => {
+    if (stops.length >= 2){
+
+      saveLastStops(stops)
+    }
+ }, [stops])
+  
+//  useEffect(() => {
+//    if (setActiveOptionMenu != "Solicitar servicio") {
+//      setActiveOptionMenu("Solicitar servicio")
+//    }
+
+// },)
+
   const updateStopCoordinate = (stopId, newCoordinate) => {
     const updatedStops = stops.map((item) =>
       item.id === stopId
@@ -75,6 +110,8 @@ const MapScreen = () => {
   console.log(address);
 
   useEffect(() => {
+
+    
     const requestPermissions = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -85,7 +122,12 @@ const MapScreen = () => {
 
     requestPermissions();
 
+   
+
   }, []);
+
+
+  console.log("origen",origin)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,6 +141,9 @@ const MapScreen = () => {
         ref={mapViewRef}
         style={styles.map}
         provider="google"
+        
+        
+
       >
         <Marker
           coordinate={{
@@ -122,13 +167,22 @@ const MapScreen = () => {
             }
           />
         ))}
-        {stops.map((item) => (
+        {stops.map((item,index) => (
           <MapViewDirections
             key={item.id}
-            origin={{
+
+            
+            
+         
+
+            origin={stops.length >= 2 ? {
+              latitude: lastStop.latitude,
+              longitude: lastStop.longitude,
+            }   :{
               latitude: origin.latitude,
               longitude: origin.longitude,
             }}
+          
             destination={{
               latitude: item.latitude,
               longitude: item.longitude,
@@ -136,6 +190,11 @@ const MapScreen = () => {
             apikey={GOOGLE_MAPS_KEY}
             strokeColor="#3C5DDC"
             strokeWidth={4}
+            onReady = {result => {
+              setDistance(result.distance)
+    
+              console.log("distancia",result.distance)
+            }}
           />
         ))}
       </MapView>
@@ -187,6 +246,8 @@ const MapScreen = () => {
             />
           </View>
         </Pressable>
+        
+        <Pressable onPress={() => navigation.navigate("Solicitar servicio")}>
         <View style={styles.requestServices}>
           <View style={styles.squareIcon}>
             <MaterialIcons
@@ -197,6 +258,7 @@ const MapScreen = () => {
             />
           </View>
         </View>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
